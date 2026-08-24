@@ -36,9 +36,93 @@ def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
+    
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    
+    #--- IA!!
+    
+    start = problem.getStartState()
 
+    if problem.isGoalState(start):
+        return []
+
+    frontier = utils.Queue()
+    frontier.push(start)
+
+    reached = {start}
+
+    parent = {}
+    action_from_parent = {}
+
+    while not frontier.isEmpty():
+
+        state = frontier.pop()
+
+        for successor, action, cost in problem.getSuccessors(state):
+
+            if successor in reached:
+                continue
+
+            reached.add(successor)
+            parent[successor] = state
+            action_from_parent[successor] = action
+
+            if problem.isGoalState(successor):
+
+                path = []
+                current = successor
+
+                while current != start:
+                    path.append(action_from_parent[current])
+                    current = parent[current]
+
+                path.reverse()
+                return path
+
+            frontier.push(successor)
+
+    return None
+    
+    # --- Mi codigo
+    """
+    inicio = problem.getStartState()
+    
+    if problem.isGoalState(inicio):
+        return []
+    
+    frontera = utils.Queue()
+    frontera.push((inicio, []))
+    
+    alcanzados = {inicio}
+    while not frontera.isEmpty():
+        estado, camino = frontera.pop()
+        for hijo, accion, costo in problem.getSuccessors(estado):
+            if hijo not in alcanzados:
+                if problem.isGoalState(hijo):
+                    return camino + [accion]
+                alcanzados.add(hijo)
+                frontera.push((hijo, camino + [accion]))
+                
+    return None
+    """
+    
+    # --- Ignorar esto:
+    """ 
+        función BÚSQUEDA-EN-ANCHURA(problema) devuelve nodo-solución o fracaso
+        nodo ← NODO(estado = problema.INICIAL)
+        si problema.ES-META(nodo.estado) entonces devolver nodo
+        frontera ← cola FIFO con nodo como único elemento
+        alcanzados ← {problema.INICIAL}
+        mientras frontera no esté vacía hacer
+            nodo ← EXTRAER(frontera)
+            para cada hijo en EXPANDIR(problema, nodo) hacer
+                s ← hijo.estado
+                si problema.ES-META(s) entonces devolver hijo
+                si s no está en alcanzados entonces
+                    agregar s a alcanzados
+                    agregar hijo a frontera
+        devolver fracaso
+    """
 
 def uniformCostSearch(problem: SearchProblem):
     """
