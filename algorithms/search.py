@@ -193,17 +193,18 @@ Codigo inicial:
             if siguiente_nodo not in nuevo_costo:
                 pq.push((siguiente_nodo, recorrido + [movimiento], nuevo_costo), prioridad)
                 
-    Cambios realizados con IA: Agregó un diccionario que almacena el menor costo del camino para cada nodo visitado. 
-    Solo guarda el camino con menor costo, asi se evita que se repitan nodos en la pq. 
+                
+Cambios realizados con IA: Agregó un diccionario que almacena el menor costo del camino para cada nodo visitado. 
+Solo guarda el camino con menor costo, asi se evita que se repitan nodos en la pq. 
     
-    Igualmente cambio la implementación de pop() de la pq, ya que la pq devuelve toda la tupla y no solo un elemento que yo necesite.
+Igualmente cambio la implementación de pop() de la pq, ya que la pq devuelve toda la tupla y no solo un elemento que yo necesite.
     
-    Por otro lado, al crear el diccionario de menor costo, más adelante verifica si el nodo no se habia visitado antes y comparara si el
-    nuevo camino al nodo es menor que el que esta guardado en el diccionario, y si es así, se actualiza el diccionario y se agrega a la pq. 
+Por otro lado, al crear el diccionario de menor costo, más adelante verifica si el nodo no se habia visitado antes y comparara si el
+nuevo camino al nodo es menor que el que esta guardado en el diccionario, y si es así, se actualiza el diccionario y se agrega a la pq. 
     
     
-    Se utilizó IA como apoyo para comprender la estructura del proyecto, especialmente el funcionamiento de problem, luego se desarrolló 
-    la versión propia y posteriormente se consultó a ChatGPT. 
+Se utilizó IA como apoyo para comprender la estructura del proyecto, especialmente el funcionamiento de problem, luego se desarrolló 
+la versión propia y posteriormente se consultó a ChatGPT y realizaron los cambios necesarios y se probó la función.. 
  """
      
     
