@@ -131,8 +131,82 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """
     Search the node that has the lowest combined cost and heuristic first.
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    pq = utils.PriorityQueue()
+
+    inicio = problem.getStartState()
+    costo_inicial = 0
+
+    prioridad_inicial = costo_inicial + heuristic(inicio, problem)
+
+    pq.push((inicio, [], costo_inicial), prioridad_inicial)
+
+    menor_costo = {inicio: costo_inicial}
+
+    while not pq.isEmpty():
+
+        estado, recorrido, costo = pq.pop()
+
+        if costo <= menor_costo[estado]:
+
+            if problem.isGoalState(estado):
+                return recorrido
+
+            for siguiente_estado, accion, costo_movimiento in problem.getSuccessors(estado):
+
+                nuevo_costo = costo + costo_movimiento
+
+                if siguiente_estado not in menor_costo or nuevo_costo < menor_costo[siguiente_estado]:
+
+                    menor_costo[siguiente_estado] = nuevo_costo
+
+                    prioridad = nuevo_costo + heuristic(siguiente_estado, problem)
+
+                    pq.push(
+                        (siguiente_estado, recorrido + [accion], nuevo_costo),
+                        prioridad
+                    )
+
+    return []
+"""
+Codigo inicial: 
+
+   pq = utils.PriorityQueue()
+    inicio = problem.getStartState()
+    costo = 0
+    prioridad_inicial = costo + heuristic(inicio, problem)
+    
+    pq.push((inicio, [], costo), prioridad_inicial)
+    
+    while not pq.isEmpty():
+        
+        estado = pq.pop(1)
+        recorrido = pq.pop(2)
+        costo = pq.pop(3)
+
+        if problem.isGoalState(estado):
+            return recorrido
+        
+        for siguiente_nodo, movimiento, costo_camino in problem.getSuccessors(estado):
+            nuevo_costo = costo + costo_camino
+            prioridad = nuevo_costo + heuristic(siguiente_nodo, problem)
+            
+            if siguiente_nodo not in nuevo_costo:
+                pq.push((siguiente_nodo, recorrido + [movimiento], nuevo_costo), prioridad)
+                
+    Cambios realizados con IA: Agregó un diccionario que almacena el menor costo del camino para cada nodo visitado. 
+    Solo guarda el camino con menor costo, asi se evita que se repitan nodos en la pq. 
+    
+    Igualmente cambio la implementación de pop() de la pq, ya que la pq devuelve toda la tupla y no solo un elemento que yo necesite.
+    
+    Por otro lado, al crear el diccionario de menor costo, más adelante verifica si el nodo no se habia visitado antes y comparara si el
+    nuevo camino al nodo es menor que el que esta guardado en el diccionario, y si es así, se actualiza el diccionario y se agrega a la pq. 
+    
+    
+    Se utilizó IA como apoyo para comprender la estructura del proyecto, especialmente el funcionamiento de problem, luego se desarrolló 
+    la versión propia y posteriormente se consultó a ChatGPT. 
+ """
+     
+    
 
 
 # Abbreviations (you can use them for the -f option in main.py)
