@@ -22,7 +22,26 @@ def manhattanHeuristic(state, problem):
     - C if all systems have been repaired.
     """
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    posicion, hasKit, pendingSystems = state
+    
+    if not hasKit:
+        target = problem.kitLocation
+        distancia = abs(posicion[0] - target[0])+abs(posicion[1] - target[1])
+        return distancia
+    
+    if pendingSystems:
+        distancias = []
+        for sistema in pendingSystems:
+            objetivo = problem.systemLocations[sistema]
+            distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
+            distancias.append(distancia)
+        return min(distancias)
+    
+    objetivo = problem.controlCenter
+    
+    distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
+    return distancia
+    
 
 
 def euclideanHeuristic(state, problem):

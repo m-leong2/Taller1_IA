@@ -36,7 +36,6 @@ def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
-    
     # TODO: Add your code here
     
     #--- IA!!
@@ -104,24 +103,6 @@ def breadthFirstSearch(problem: SearchProblem):
                 frontera.push((hijo, camino + [accion]))
                 
     return None
-    """
-    
-    # --- Ignorar esto:
-    """ 
-        función BÚSQUEDA-EN-ANCHURA(problema) devuelve nodo-solución o fracaso
-        nodo ← NODO(estado = problema.INICIAL)
-        si problema.ES-META(nodo.estado) entonces devolver nodo
-        frontera ← cola FIFO con nodo como único elemento
-        alcanzados ← {problema.INICIAL}
-        mientras frontera no esté vacía hacer
-            nodo ← EXTRAER(frontera)
-            para cada hijo en EXPANDIR(problema, nodo) hacer
-                s ← hijo.estado
-                si problema.ES-META(s) entonces devolver hijo
-                si s no está en alcanzados entonces
-                    agregar s a alcanzados
-                    agregar hijo a frontera
-        devolver fracaso
     """
 
 def uniformCostSearch(problem: SearchProblem):
