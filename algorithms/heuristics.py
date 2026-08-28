@@ -167,6 +167,8 @@ def systemRepairHeuristic(
     
     
     """
+    Codigo inicial:
+    
     position, hasKit, pendingSystems = state
     if hasKit == False:
         objetivo = problem.kitPosition
