@@ -136,5 +136,75 @@ def systemRepairHeuristic(
     - Consider the kit, pending systems, and the final return to control center
     - Balance heuristic strength vs. computation time (do experiments!)
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    position, hasKit, pendingSystems = state
+
+    if hasKit == False:
+        objetivo = problem.kitPosition
+        distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+        return distancia
+    
+    if hasKit == True and len(pendingSystems) > 0:
+        distancias = []
+
+        for sistema in pendingSystems:
+            objetivo = sistema
+            distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+            distancias.append(distancia)
+
+        distancia_sistema = min(distancias)
+
+        distancia_control = (
+            abs(position[0] - problem.controlPosition[0])
+            + abs(position[1] - problem.controlPosition[1])
+        )
+
+        return distancia_sistema + distancia_control
+    
+    if len(pendingSystems) == 0:
+        objetivo = problem.controlPosition
+        distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+        return distancia
+    
+    
+    """
+    position, hasKit, pendingSystems = state
+    if hasKit == False:
+        objetivo = problem.kitPosition
+        distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+        return distancia
+    
+    if hasKit == True and len(pendingSystems) > 0:
+        distancias = []
+        for sistema in pendingSystems:
+            objetivo = problem.systemPositions[sistema]
+            distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+            distancias.append(distancia)
+            distancia_sistema = min(distancias)
+        return distancia_sistema
+    
+    if len(pendingSystems) == 0:
+        objetivo = problem.controlPosition
+        distancia = (abs(position[0] - objetivo[0]) + abs(position[1] - objetivo[1]))
+        return distancia
+    
+    
+    Cambios realizados con IA: Nuestra idea inicial para la heurística era que cuando el robot no tuviera el kit, la heurística calculara 
+    la distancia hasta K. Luego, cuando ya tuviera el kit, calcular la distancia hasta el sistema pendiente más cercano, ya que ese 
+    sería el siguiente objetivo que tendría que visitar. Por ultimo, si ya no quedan sistemas pendientes, calcular la distancia hasta C.
+    
+    Esta idea se la explicamos a ChatGPT y no shizo caer en cuenta que al momento de que ya tuviera el kit y calcular la distancia hasta el sistema pendiente más cercano,
+    no estaba considerando que después de reparar ese sistema, tendría que ir a reparar los demás sistemas pendientes y luego ir a C. Por esto agregó la distancia desde la
+    posición actual hasta C y la distancia hasta el sistema pendiente más cercano.
+    
+    Asimismo, agregó una lista para guardar las distancias desde la posición del robot hasta cada sistema pendiente. Ahora se guardan todas las
+    distancias y se utiliza min(distancias) para escoger el sistema pendiente más cercano.
+    
+    Cambió la forma de obtener la posición de los sistemas, ya que cada elemento de pendingSystems ya corresponde directamente a la posición de un sistema T, por lo
+    que se utiliza sistema directamente como objetivo.
+    
+    cambió la condición pendingSystems != [] por len(pendingSystems) > 0 y pendingSystems == [] por len(pendingSystems) == 0, ya que pendingSystems es una
+    tupla y no una lista.
+    
+    Se utilizó ChatGPT como apoyo para revisar la idea inicial de la heurística, identificar que faltaba y revisar la implementación. Despues se realizaron los cambios necesarios
+    y se probo la función.
+    """
