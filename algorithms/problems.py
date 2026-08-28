@@ -181,6 +181,8 @@ class DiagnosticProblem(SearchProblem):
             self._visitedlist.append(state)
 
         return successors
+      
+    
 
     def getCostOfActions(self, actions):
         """
@@ -282,7 +284,6 @@ class ModuleRepairProblem(SearchProblem):
         ]:
             dx, dy = Actions.directionToVector(direccion)
             nX, nY = int(psc[0] + dx), int(psc[1] + dy)
-
             if not self.walls[nX][nY]:
                 pscnueva = (nX, nY)
                 stepCost = self._getStepCost(pscnueva, hasModule)
@@ -290,6 +291,44 @@ class ModuleRepairProblem(SearchProblem):
                 nextState = (pscnueva, newHasModule)
                 successors.append((nextState, direccion, stepCost))
         return successors
+    
+    # mi codigo esta comentado en las siguentes lineas.
+    # prompt usado fue "Al ejecutar el 
+    # punto 4 me aparece un error relacionado con Directions.ACTIONS. 
+    # ¿Qué significa este error y cómo debería corregirlo"
+    # La respuesta dada Por ChatGPT fue: "El error relacionado con 
+    # Directions.ACTIONS significa que la variable ACTIONS no está 
+    # definida en la clase Directions. Esto puede ocurrir si estás intentando
+    # acceder a una constante o lista de acciones que no existe en la 
+    # implementación actual de la clase Directions.""
+    # Al momento de recibir la respuesta también me indico que lo mejor era 
+    # reemplazar Directions.ACTIONS por una lista de acciones 
+    # definidas manualmente, como [Directions.NORTH, Directions.SOUTH, 
+    # Directions.EAST, Directions.WEST].
+    
+    # Además me ayudo al corregir la construcción del siguiente estado usando el siguiente prompt:
+    #“¿Así va bien esta parte de getSuccessors? 
+    # No sé si estoy guardando bien el estado después de que el robot recoge M."
+    # Respuesta: "para que no solo guardara la nueva posición del robot, sino también si ya 
+    # había recogido el módulo. Además, el costo del movimiento pasó a calcularse
+    # usando la posición a la que el robot realmente entra.""
+     
+    """def getSuccessors(self, state):
+    successors = []
+    self._expanded += 1
+    psc, hasModule = state
+    for direccion in Directions.ACTIONS:
+        dx, dy = Actions.directionToVector(direccion)
+        nx, ny = int(psc[0] + dx), int(psc[1] + dy)
+        if not self.walls[nx][ny]:
+            psc = (nx, ny)
+            stepCost = self._getStepCost(psc, hasModule)
+            newHasModule = hasModule or psc == self.modulePosition
+            successors.append(
+                (psc, direccion, stepCost)
+            )
+    return successors
+    """
 
     def getCostOfActions(self, actions):
         """
