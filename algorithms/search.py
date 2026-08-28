@@ -28,15 +28,102 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    
+    
+    """"
+    Mi codigo inicial:
+    
+    inicio = problem.getStartState()
+    pila = utils.Stack()
+    visitado = set()
+    
+    while not pila.isEmpty():
+        
+        elemento = pila.pop()
+        estado = elemento[0]
+        camino = elemento[1]
+        
+        if estado not in visitado:
+            visitado.add(estado)
+            
+            if problem.isGoalState(estado)
+                return camino
+            
+            sucesores = problem.getSuccessors
+            
+            for sucesor in sucesores:
+                
+                next = sucesor[0]
+                
+                if next not in visitado:
+                    
+                    pila.push(next, camino)
+                    
+                    
+    return []
+    
+    
+    Promp: podrias decirme  en que esta fallando mi algoritmno de DFS
+    Utilice Gemini
+    
+    pq no funcionaba ?
+    
+    1. no empiece bien la pila, entonces inicia vacia cuando deberia tener 
+    la parte de inicio para poder ejecutarse bien. El error mas grande dee logica 
+    estuvo ahi 
+    
+    2. se me olvidop los : en un if 
+    
+    3. sucesores tiene tiene que recibir estado y no le puse ningun parametro
+    algo que pase por alto ya que en el anterior if siesta
+    
+    4. No se agrga la acicion al camino, ni tampoco guarde la ccion, ya que 
+    para poder saber cual es el camino necesito guardar las acciones, luego
+    no agregue la nueva accion que no tenia al  camino anterior ya que asi se
+    guarda la secuencia del camino que es lo importante. Ademas, al final intente 
+    hacer push en la pila poniendo 2 cosas cuando solo recibe una
+         
+"""
+    
+    inicio = problem.getStartState()
+    pila = utils.Stack()
+    visitado = set()
+    caminoInicial = []
+    pila.push((inicio, caminoInicial))
+        
+    while not pila.isEmpty():
+            
+        elemento = pila.pop()
+        estado = elemento[0]
+        camino = elemento[1]
+            
+        if estado not in visitado:
+            visitado.add(estado)
+            
+            if problem.isGoalState(estado):
+                return camino
+                
+            sucesores = problem.getSuccessors(estado)
+                
+            for sucesor in sucesores: 
+                next = sucesor[0]
+                accion = sucesor[1]
+                    
+                if next not in visitado:  
+                    new_camino = camino + [accion]
+                    pila.push((next, new_camino))
+                        
+                        
+    return []
+    
+    
+    
 
 
 def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
-    
     # TODO: Add your code here
     
     #--- IA!!
@@ -123,8 +210,6 @@ def breadthFirstSearch(problem: SearchProblem):
                     agregar hijo a frontera
         devolver fracaso
     """
-    
-    
 
 def uniformCostSearch(problem: SearchProblem):
     """
@@ -195,8 +280,83 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """
     Search the node that has the lowest combined cost and heuristic first.
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    pq = utils.PriorityQueue()
+
+    inicio = problem.getStartState()
+    costo_inicial = 0
+
+    prioridad_inicial = costo_inicial + heuristic(inicio, problem)
+
+    pq.push((inicio, [], costo_inicial), prioridad_inicial)
+
+    menor_costo = {inicio: costo_inicial}
+
+    while not pq.isEmpty():
+
+        estado, recorrido, costo = pq.pop()
+
+        if costo <= menor_costo[estado]:
+
+            if problem.isGoalState(estado):
+                return recorrido
+
+            for siguiente_estado, accion, costo_movimiento in problem.getSuccessors(estado):
+
+                nuevo_costo = costo + costo_movimiento
+
+                if siguiente_estado not in menor_costo or nuevo_costo < menor_costo[siguiente_estado]:
+
+                    menor_costo[siguiente_estado] = nuevo_costo
+
+                    prioridad = nuevo_costo + heuristic(siguiente_estado, problem)
+
+                    pq.push(
+                        (siguiente_estado, recorrido + [accion], nuevo_costo),
+                        prioridad
+                    )
+
+    return []
+"""
+Codigo inicial: 
+
+   pq = utils.PriorityQueue()
+    inicio = problem.getStartState()
+    costo = 0
+    prioridad_inicial = costo + heuristic(inicio, problem)
+    
+    pq.push((inicio, [], costo), prioridad_inicial)
+    
+    while not pq.isEmpty():
+        
+        estado = pq.pop(1)
+        recorrido = pq.pop(2)
+        costo = pq.pop(3)
+
+        if problem.isGoalState(estado):
+            return recorrido
+        
+        for siguiente_nodo, movimiento, costo_camino in problem.getSuccessors(estado):
+            nuevo_costo = costo + costo_camino
+            prioridad = nuevo_costo + heuristic(siguiente_nodo, problem)
+            
+            if siguiente_nodo not in nuevo_costo:
+                pq.push((siguiente_nodo, recorrido + [movimiento], nuevo_costo), prioridad)
+                
+                
+Cambios realizados con IA: Agregó un diccionario que almacena el menor costo del camino para cada nodo visitado. 
+Solo guarda el camino con menor costo, asi se evita que se repitan nodos en la pq. 
+    
+Igualmente cambio la implementación de pop() de la pq, ya que la pq devuelve toda la tupla y no solo un elemento que yo necesite.
+    
+Por otro lado, al crear el diccionario de menor costo, más adelante verifica si el nodo no se habia visitado antes y comparara si el
+nuevo camino al nodo es menor que el que esta guardado en el diccionario, y si es así, se actualiza el diccionario y se agrega a la pq. 
+    
+    
+Se utilizó IA como apoyo para comprender la estructura del proyecto, especialmente el funcionamiento de problem, luego se desarrolló 
+la versión propia y posteriormente se consultó a ChatGPT y realizaron los cambios necesarios y se probó la función.. 
+ """
+     
+    
 
 
 # Abbreviations (you can use them for the -f option in main.py)
