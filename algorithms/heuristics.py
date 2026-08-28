@@ -25,19 +25,19 @@ def manhattanHeuristic(state, problem):
     posicion, hasKit, pendingSystems = state
     
     if not hasKit:
-        target = problem.kitLocation
+        target = problem.kitPosition
         distancia = abs(posicion[0] - target[0])+abs(posicion[1] - target[1])
         return distancia
     
     if pendingSystems:
         distancias = []
         for sistema in pendingSystems:
-            objetivo = problem.systemLocations[sistema]
+            objetivo = problem.systemPositions[sistema]
             distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
             distancias.append(distancia)
         return min(distancias)
     
-    objetivo = problem.controlCenter
+    objetivo = problem.controlPosition
     
     distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
     return distancia
