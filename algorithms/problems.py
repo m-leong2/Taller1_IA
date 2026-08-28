@@ -272,7 +272,7 @@ class ModuleRepairProblem(SearchProblem):
         - Once the robot is carrying M, movement costs twice the normal terrain cost.
         - The movement used to enter M still has normal terrain cost.
         """
-
+#IA
         successors = []
         self._expanded += 1
         psc, hasModule = state
@@ -313,6 +313,7 @@ class ModuleRepairProblem(SearchProblem):
     # había recogido el módulo. Además, el costo del movimiento pasó a calcularse
     # usando la posición a la que el robot realmente entra.""
      
+#mi codigo
     """def getSuccessors(self, state):
     successors = []
     self._expanded += 1
