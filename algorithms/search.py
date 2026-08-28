@@ -123,11 +123,15 @@ def breadthFirstSearch(problem: SearchProblem):
                     agregar hijo a frontera
         devolver fracaso
     """
+    
+    
 
 def uniformCostSearch(problem: SearchProblem):
     """
     Search the node of least total cost first.
     """
+    # mi codigo 
+    
     pq = utils.PriorityQueue()
     inicio = problem.getStartState()
     pq.push((inicio, [], 0), 0)  
@@ -139,12 +143,53 @@ def uniformCostSearch(problem: SearchProblem):
         
         for siguiente_valor, accion, costo_camino in problem.getSuccessors(psc):
             nuevo_costo = costo + costo_camino
-            
             if siguiente_valor not in menor_costo or nuevo_costo < menor_costo[siguiente_valor]:
                 menor_costo[siguiente_valor] = nuevo_costo
                 pq.push((siguiente_valor, recorrido + [accion], nuevo_costo), nuevo_costo)
-    return []  
-    
+    return [] 
+
+#IA 
+# Use ChatGPT para confirmar el funcionamiento de mi codigo, sin embargo, mi codigo corrio bien y no hice
+# cambios al codigo mio original
+# El prompt que use fue: "¿Así va bien uniformCostSearch? No sé si estoy guardando bien el estado después de que el robot recoge M."
+# lo cual me respondio con el siguiente codigo y respuestas, no obstante, no lo entendi del todo
+# por esta razón mantuve mi codigo original, su respuesta fue la siguiente: "La IA confirmó que la implementación
+# de UCS ya era correcta y sugirió una pequeña mejora para evitar expandir rutas antiguas de mayor costo. La modificación 
+# era opcional y buscaba hacer el código más limpio y eficiente."
+# Sin embargo no use la sugerencia de la IA, ya que no entendí del todo su respuesta y mi código original corrio bien.
+
+""""
+def uniformCostSearch(problem: SearchProblem):
+    pq = utils.PriorityQueue()
+
+    start_state = problem.getStartState()
+    pq.push((start_state, [], 0), 0)
+
+    menor_costo = {start_state: 0}
+
+    while not pq.isEmpty():
+        state, actions, costo = pq.pop()
+
+        if costo > menor_costo[state]:
+            continue
+
+        if problem.isGoalState(state):
+            return actions
+
+        for siguiente_valor, action, costo_camino in problem.getSuccessors(state):
+            nuevo_costo = costo + costo_camino
+
+            if siguiente_valor not in menor_costo or nuevo_costo < menor_costo[siguiente_valor]:
+                menor_costo[siguiente_valor] = nuevo_costo
+
+                pq.push(
+                    (siguiente_valor, actions + [action], nuevo_costo),
+                    nuevo_costo
+                )
+
+    return []
+
+   """
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """
