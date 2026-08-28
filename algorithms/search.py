@@ -126,6 +126,19 @@ def breadthFirstSearch(problem: SearchProblem):
     """
     # TODO: Add your code here
     
+    
+    """
+    Prompt:
+    Revisa esta implementacion de BFS e identifica los errores presentes teniendo en cuenta el psudo codigo proporcionado
+    
+    A partir de esta revision, se identifico un error al no agregar el estado inicial al cojunto de los alcanzados
+    y me la estructura en la que debia retornar el camino al estado objetivo
+    
+    Posteriormente le pedi que realizara su propia version del algoritmo. La IA propuso utilizar diccionarios para almacenar
+    el estado padre y la acción realizada para llegar a cada estado. Esto permite reconstruir el camino solamente cuando se
+    encuentra la meta, evitando almacenar y copiar el camino completo en cada elemento de la Queue.
+    """
+    
     #--- IA!!
     
     start = problem.getStartState()
@@ -192,24 +205,7 @@ def breadthFirstSearch(problem: SearchProblem):
                 
     return None
     """
-    
-    # --- Ignorar esto:
-    """ 
-        función BÚSQUEDA-EN-ANCHURA(problema) devuelve nodo-solución o fracaso
-        nodo ← NODO(estado = problema.INICIAL)
-        si problema.ES-META(nodo.estado) entonces devolver nodo
-        frontera ← cola FIFO con nodo como único elemento
-        alcanzados ← {problema.INICIAL}
-        mientras frontera no esté vacía hacer
-            nodo ← EXTRAER(frontera)
-            para cada hijo en EXPANDIR(problema, nodo) hacer
-                s ← hijo.estado
-                si problema.ES-META(s) entonces devolver hijo
-                si s no está en alcanzados entonces
-                    agregar s a alcanzados
-                    agregar hijo a frontera
-        devolver fracaso
-    """
+
 
 def uniformCostSearch(problem: SearchProblem):
     """
