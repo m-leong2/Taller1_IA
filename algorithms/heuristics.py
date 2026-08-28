@@ -32,16 +32,21 @@ def manhattanHeuristic(state, problem):
     if pendingSystems:
         distancias = []
         for sistema in pendingSystems:
-            objetivo = problem.systemPositions[sistema]
+            objetivo = sistema
             distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
             distancias.append(distancia)
         return min(distancias)
-    
     objetivo = problem.controlPosition
     
     distancia = abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
     return distancia
-    
+"""
+       cambie esta parte por la que esta ahorita ya que daba error: 
+   for sistema in pendingSystems:
+    objetivo = problem.systemPositions[sistema] """
+            
+          
+  
 
 
 def euclideanHeuristic(state, problem):
